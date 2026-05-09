@@ -135,14 +135,41 @@
 <div id="mural" class="page">
   <h2>Mural de Recados</h2>
   <div class="card">
-    <h3 style="text-align:center;">ESCALA DE ATIVIDADES - MAIO 2026</h3>
+    <h3 style="text-align:center;">ESCALA DE PORTARIA E RECEPÇÃO</h3>
     <table class="escala-tabela">
-      <thead><tr><th>DATA</th><th>HORA</th><th>ATIVIDADE</th></tr></thead>
+      <thead>
+        <tr>
+          <th>DIA</th>
+          <th>HORA</th>
+          <th>RECEPCIONISTA</th>
+          <th>PORTARIA</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>03 (DOM)</td><td>18H30</td><td>SANTA CEIA: PR. ELIAS</td></tr>
-        <tr><td>05 (TER)</td><td>19H30</td><td>DOUTRINA: OB. EDVAN</td></tr>
-        <tr><td>07 (QUI)</td><td>19H30</td><td>CÍRCULO DE ORAÇÃO: MÁRCIA/FRANCISCA</td></tr>
-        <tr><td>09 (SÁB)</td><td>00H00</td><td>VIGÍLIA: PR. PRESIDENTE ELIAS</td></tr>
+        <tr>
+          <td>TER</td>
+          <td>19H30</td>
+          <td>IRMÃO ALESSANDRO</td>
+          <td>IRMÃO JOSUÉ</td>
+        </tr>
+        <tr>
+          <td>QUI</td>
+          <td>19H30</td>
+          <td>IRMÃ RUTY</td>
+          <td>IRMÃO ALESSANDRO</td>
+        </tr>
+        <tr>
+          <td>SÁB</td>
+          <td>VIGÍLIA</td>
+          <td>LIVRE</td>
+          <td>LIVRE</td>
+        </tr>
+        <tr>
+          <td>DOM</td>
+          <td>18H30</td>
+          <td>IRMÃ LAÍS COSTA</td>
+          <td>IRMÃO JOSUÉ</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -159,8 +186,8 @@
 
 <div id="devocional" class="page">
   <h2>Devocional Diário</h2>
-  <div id="devocionalCard" class="card"></div>
-  <button class="btn" onclick="atualizarDevocional()">Ler Outro Texto</button>
+  <div id="devocionalCard"></div>
+  <button class="btn" onclick="atualizarDevocional()">Ler Outra Meditação</button>
 </div>
 
 <div id="quiz" class="page">
@@ -238,11 +265,32 @@
 <script>
 // DADOS
 const motivosOracao = ["Pelos enfermos do hospital local", "Pelas crianças da nossa igreja", "Pela liderança da igreja", "Pelos desempregados", "Pelas famílias da Vila Ildemar", "Pelos missionários no campo"];
+
+// LISTA DE DEVOCIONAIS PERSONALIZADOS
 const devocionais = [
-  {ref: "Salmos 1:1", txt: "Bem-aventurado o homem que não anda segundo o conselho dos ímpios..."},
-  {ref: "Filipenses 4:13", txt: "Tudo posso naquele que me fortalece."},
-  {ref: "Mateus 6:33", txt: "Buscai primeiro o Reino de Deus e a sua justiça."}
+  {
+    titulo: "A Paz no Meio da Tempestade",
+    ref: "João 14:27",
+    txt: "Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá. Não se turbe o vosso coração, nem se atemorize.",
+    meditacao: "A paz de Jesus não depende de circunstâncias favoráveis. Ela é uma âncora interna que nos mantém firmes quando o mar da vida se agita. Confie hoje no controle dAquele que acalma o mar.",
+    oracao: "Senhor, ajuda-me a descansar em Ti hoje, independentemente dos desafios."
+  },
+  {
+    titulo: "Forças Renovadas",
+    ref: "Isaías 40:31",
+    txt: "Mas os que esperam no Senhor renovarão as suas forças; subirão com asas como águias...",
+    meditacao: "Esperar em Deus não é tempo perdido, é tempo de preparação. Se você se sente cansado, entregue sua fadiga ao Senhor. Ele tem o vigor necessário para você voar alto novamente.",
+    oracao: "Pai, renova meu ânimo e dá-me forças para continuar a caminhada."
+  },
+  {
+    titulo: "O Cuidado de Deus",
+    ref: "1 Pedro 5:7",
+    txt: "Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós.",
+    meditacao: "Muitas vezes carregamos pesos que não foram feitos para nós. Deus se importa com cada detalhe da sua vida, desde os grandes problemas até as pequenas preocupações. Solte o fardo.",
+    oracao: "Jesus, entrego em Tuas mãos tudo o que tem tirado o meu sono. Eu confio no Teu cuidado."
+  }
 ];
+
 const frases = ["Deus não te esqueceu.", "A oração é a chave da vitória.", "Sua fé te salvou.", "Descansa em Deus.", "O choro pode durar uma noite, mas a alegria vem pela manhã."];
 const citacoes = ["João 3:16", "Salmo 23:1", "Romanos 8:28", "Isaías 41:10", "Salmo 91:1"];
 const perguntas = [
@@ -292,8 +340,24 @@ function atualizarOracao() {
 }
 
 function atualizarDevocional() {
-  const d = devocionais[Math.floor(Math.random()*devocionais.length)];
-  document.getElementById('devocionalCard').innerHTML = `<h3>${d.ref}</h3><p style="font-size:18px; font-style:italic;">"${d.txt}"</p>`;
+  const d = devocionais[Math.floor(Math.random() * devocionais.length)];
+  const container = document.getElementById('devocionalCard');
+  
+  container.innerHTML = `
+    <div class="card" style="border-left: 5px solid var(--azul);">
+      <small style="color:var(--dourado); font-weight:700; text-transform:uppercase; letter-spacing:1px;">${d.titulo}</small>
+      <h3 style="margin-top:10px;">${d.ref}</h3>
+      <p style="font-size:16px; font-style:italic; color:var(--texto); background:var(--dourado-claro); padding:15px; border-radius:10px; margin:10px 0; border-left: 3px solid var(--dourado);">
+        "${d.txt}"
+      </p>
+      <h4 style="color:var(--azul-profundo); margin-bottom:5px; font-size:14px;">MEDITAÇÃO:</h4>
+      <p style="color:var(--texto-claro); font-size:15px; margin-bottom:15px; line-height:1.5;">${d.meditacao}</p>
+      <h4 style="color:var(--azul-profundo); margin-bottom:5px; font-size:14px;">ORAÇÃO:</h4>
+      <p style="color:var(--texto); font-size:15px; font-style:italic; border-top:1px solid rgba(0,0,0,0.05); padding-top:10px;">
+        ${d.oracao}
+      </p>
+    </div>
+  `;
 }
 
 function atualizarFrase() {
