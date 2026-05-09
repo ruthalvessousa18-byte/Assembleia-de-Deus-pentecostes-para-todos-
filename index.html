@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Assembleia de Deus Pentecostes Para Todos</title>
+<meta name="theme-color" content="#0F2C4D">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-profundo: #0F2C4D;
+    --azul: #1E4D8F;
+    --dourado: #B8954F;
+    --dourado-claro: #F0E6D2;
+    --branco: #FFFFFF;
+    --fundo: #FBF9F6;
+    --texto: #1A1A1A;
+    --texto-claro: #6B6B6B;
+    --verde: #4CAF50;
+    --vermelho: #C94A4A;
+    --whatsapp: #25D366;
+    --mercado-pago: #009EE3;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Inter', sans-serif; background:var(--fundo); color:var(--texto); overflow-x:hidden; padding-bottom:80px; }
+
+  header {
+    background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul) 100%);
+    padding:20px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 4px 20px rgba(15,44,77,0.15);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size:20px;
+    color:var(--branco);
+    font-weight:700;
+  }
+  .back-btn { background:none; border:none; color:var(--branco); font-size:22px; cursor:pointer; display:none; }
+
+  .hero { padding: 28px 20px 16px 20px; text-align: center; }
+  .hero h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--azul-profundo); }
+
+  .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; padding:20px 18px; }
+  .item {
+    background:var(--branco);
+    border-radius:20px;
+    padding:24px 12px;
+    text-align:center;
+    cursor:pointer;
+    border:1px solid rgba(184,149,79,0.15);
+    box-shadow:0 2px 12px rgba(0,0,0,0.04);
+  }
+  .icon { font-size:38px; margin-bottom:10px; display:block; }
+  .item span { font-size:12px; color:var(--texto); font-weight:600; display:block; }
+
+  .page { display:none; padding:28px 22px; min-height:80vh; background:var(--branco); }
+  .page.active { display:block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+  .card {
+    background:var(--fundo);
+    border-left:4px solid var(--dourado);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.03);
+  }
+  .card h3 { color:var(--azul); font-size:16px; margin-bottom:6px; }
+
+  .escala-tabela { width: 100%; border-collapse: collapse; font-size: 11px; margin: 10px 0; }
+  .escala-tabela th { background: var(--azul-profundo); color: white; padding: 6px; text-align: left; }
+  .escala-tabela td { padding: 6px; border-bottom: 1px solid var(--dourado-claro); }
+
+  .btn {
+    background: linear-gradient(135deg, var(--dourado) 0%, #C9A961 100%);
+    color:var(--branco);
+    padding:16px 24px;
+    border-radius:12px;
+    text-decoration:none;
+    display:block;
+    font-weight:700;
+    margin-top:12px;
+    text-align:center;
+    border:none;
+    cursor:pointer;
+    font-size:15px;
+  }
+  .btn-zap { background: var(--whatsapp); margin-top: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; color: white; padding: 12px; border-radius: 12px; font-weight: 700; }
+  .btn-apoio { background: var(--mercado-pago); color: white; padding: 16px; border-radius: 12px; text-decoration: none; display: block; font-weight: 700; text-align: center; margin-top: 15px; }
+
+  .quiz-feedback { padding:14px; border-radius:10px; margin-top:16px; display:none; font-weight:600; text-align:center; }
+  .certo { background:#E8F5E9; color:var(--verde); }
+  .erro { background:#FFEBEE; color:var(--vermelho); }
+
+  textarea { width:100%; min-height:200px; padding:16px; border:2px solid var(--dourado-claro); border-radius:12px; background:var(--fundo); font-family: inherit; }
+  .whatsapp-fixo { position: fixed; bottom: 0; left: 0; right: 0; background: var(--whatsapp); color: white; text-align: center; padding: 16px; font-weight: 700; text-decoration: none; z-index: 100; }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" id="backBtn" onclick="goHome()">←</button>
+  <h1 id="headerTitle">Assembleia de Deus Pentecostes</h1>
+  <div style="color:var(--dourado); font-size:20px;">✨</div>
+</header>
+
+<div id="home" class="page active" style="background:var(--fundo); padding:0;">
+  <div class="hero">
+    <h2>Para Todos</h2>
+    <p>Uma casa de oração em suas mãos</p>
+  </div>
+  <div class="grid">
+    <div class="item" onclick="openPage('cultos')"><div class="icon">🕊️</div><span>Cultos</span></div>
+    <div class="item" onclick="openPage('local')"><div class="icon">📍</div><span>Localização</span></div>
+    <div class="item" onclick="openPage('ministerios')"><div class="icon">👥</div><span>Ministérios</span></div>
+    <div class="item" onclick="openPage('palavra')"><div class="icon">📖</div><span>Palavra</span></div>
+    <div class="item" onclick="openPage('oracao')"><div class="icon">🙏</div><span>Oração</span></div>
+    <div class="item" onclick="openPage('mural')"><div class="icon">📢</div><span>Mural</span></div>
+    <div class="item" onclick="openPage('quiz')"><div class="icon">❓</div><span>Quiz</span></div>
+    <div class="item" onclick="openPage('devocional')"><div class="icon">📚</div><span>Devocional</span></div>
+    <div class="item" onclick="openPage('notas')"><div class="icon">📝</div><span>Notas</span></div>
+    <div class="item" onclick="openPage('citacoes')"><div class="icon">💬</div><span>Citações</span></div>
+    <div class="item" onclick="openPage('frases')"><div class="icon">✨</div><span>Frases</span></div>
+    <div class="item" onclick="window.open('https://mpago.la/2Gw5oMi', '_blank')"><div class="icon">🎁</div><span>Apoiar</span></div>
+    <div class="item" onclick="openPage('info')"><div class="icon">ℹ️</div><span>Info</span></div>
+  </div>
+</div>
+
+<div id="mural" class="page">
+  <h2>Mural de Recados</h2>
+  <div class="card">
+    <h3 style="text-align:center;">ESCALA DE ATIVIDADES - MAIO 2026</h3>
+    <table class="escala-tabela">
+      <thead><tr><th>DATA</th><th>HORA</th><th>ATIVIDADE</th></tr></thead>
+      <tbody>
+        <tr><td>03 (DOM)</td><td>18H30</td><td>SANTA CEIA: PR. ELIAS</td></tr>
+        <tr><td>05 (TER)</td><td>19H30</td><td>DOUTRINA: OB. EDVAN</td></tr>
+        <tr><td>07 (QUI)</td><td>19H30</td><td>CÍRCULO DE ORAÇÃO: MÁRCIA/FRANCISCA</td></tr>
+        <tr><td>09 (SÁB)</td><td>00H00</td><td>VIGÍLIA: PR. PRESIDENTE ELIAS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="background:var(--dourado-claro); text-align:center; border:none;">
+    <p>"Portanto, meus amados irmãos, sede firmes e constantes..." - 1 Co 15:58 ARC</p>
+  </div>
+</div>
+
+<div id="oracao" class="page">
+  <h2>Oração</h2>
+  <div id="oracaoLista"></div>
+  <button class="btn" onclick="atualizarOracao()">Pedir Novos Motivos</button>
+</div>
+
+<div id="devocional" class="page">
+  <h2>Devocional Diário</h2>
+  <div id="devocionalCard" class="card"></div>
+  <button class="btn" onclick="atualizarDevocional()">Ler Outro Texto</button>
+</div>
+
+<div id="quiz" class="page">
+  <h2>Quiz Bíblico</h2>
+  <div class="card">
+    <div id="quizStatus" style="font-size:12px; font-weight:bold; color:var(--azul);"></div>
+    <div id="quizPergunta" style="font-size:18px; font-weight:600; margin:15px 0;"></div>
+    <div id="quizOpcoes"></div>
+    <div id="quizFeedback" class="quiz-feedback"></div>
+    <button id="btnProxima" class="btn" style="display:none;" onclick="proximaPergunta()">Próxima</button>
+  </div>
+</div>
+
+<div id="frases" class="page">
+  <h2>Frases com Deus</h2>
+  <div class="card" style="text-align:center; border-top:4px solid var(--dourado); border-left:none;">
+    <p id="fraseTexto" style="font-size:18px; font-style:italic;"></p>
+  </div>
+  <button class="btn" onclick="atualizarFrase()">Nova Frase</button>
+  <a id="linkZap" href="#" class="btn-zap">Compartilhar no WhatsApp</a>
+</div>
+
+<div id="citacoes" class="page">
+  <h2>Citações Bíblicas</h2>
+  <div id="citacoesLista"></div>
+  <button class="btn" onclick="atualizarCitacoes()">Ver Outras Citações</button>
+</div>
+
+<div id="info" class="page">
+  <h2>Sobre a Igreja</h2>
+  <div class="card" style="text-align:center;">
+    <h3>AD Pentecostes Para Todos</h3>
+    <p>Uma casa de oração para todas as nações.</p>
+  </div>
+  <div class="card" style="text-align:center; border-left-color: var(--mercado-pago);">
+    <h3 style="color:var(--mercado-pago);">Apoie nossa Missão</h3>
+    <a href="https://mpago.la/2Gw5oMi" target="_blank" class="btn-apoio">APOIAR VIA MERCADO PAGO</a>
+  </div>
+</div>
+
+<div id="notas" class="page">
+  <h2>Minhas Anotações</h2>
+  <textarea id="noteArea" placeholder="Anote a mensagem do culto..."></textarea>
+  <button class="btn" onclick="localStorage.setItem('igreja_notas', document.getElementById('noteArea').value); alert('Salvo!')">Salvar</button>
+</div>
+
+<div id="cultos" class="page">
+  <h2>Horários de Culto</h2>
+  <div class="card"><h3>Terça e Quinta</h3><p>19:30 - Culto de Ensino e Oração</p></div>
+  <div class="card"><h3>Domingo</h3><p>18:30 - Culto da Família</p></div>
+</div>
+
+<div id="local" class="page">
+  <h2>Como Chegar</h2>
+  <div class="card" style="text-align:center;">
+    <p>Quadra 81, Lote 183 - Vila Ildemar, Açailândia-MA</p>
+    <a href="https://share.google/oo4wEa1coiWevtw6r" target="_blank" class="btn">Abrir Mapa</a>
+  </div>
+</div>
+
+<div id="ministerios" class="page">
+  <h2>Ministérios</h2>
+  <div class="card"><h3>Juventude</h3><p>Encontros semanais de edificação.</p></div>
+  <div class="card"><h3>Mulheres</h3><p>Líderes: Márcia e Francisca.</p></div>
+</div>
+
+<div id="palavra" class="page">
+  <h2>Palavra do Dia</h2>
+  <div id="palavraCard" class="card"></div>
+  <button class="btn" onclick="carregarPalavra()">Nova Palavra</button>
+</div>
+
+<a href="https://wa.me/5599981220307" target="_blank" class="whatsapp-fixo">💬 Falar com o Pastor</a>
+
+<script>
+// DADOS
+const motivosOracao = ["Pelos enfermos do hospital local", "Pelas crianças da nossa igreja", "Pela liderança da igreja", "Pelos desempregados", "Pelas famílias da Vila Ildemar", "Pelos missionários no campo"];
+const devocionais = [
+  {ref: "Salmos 1:1", txt: "Bem-aventurado o homem que não anda segundo o conselho dos ímpios..."},
+  {ref: "Filipenses 4:13", txt: "Tudo posso naquele que me fortalece."},
+  {ref: "Mateus 6:33", txt: "Buscai primeiro o Reino de Deus e a sua justiça."}
+];
+const frases = ["Deus não te esqueceu.", "A oração é a chave da vitória.", "Sua fé te salvou.", "Descansa em Deus.", "O choro pode durar uma noite, mas a alegria vem pela manhã."];
+const citacoes = ["João 3:16", "Salmo 23:1", "Romanos 8:28", "Isaías 41:10", "Salmo 91:1"];
+const perguntas = [
+  {p: "Quem construiu a arca?", o: ["Moisés", "Noé", "Davi"], r: 1},
+  {p: "Qual o 1º livro da Bíblia?", o: ["Êxodo", "Gênesis", "Salmos"], r: 1},
+  {p: "Quem derrotou Golias?", o: ["Saul", "Samuel", "Davi"], r: 2},
+  {p: "Quantos foram os apóstolos?", o: ["12", "10", "7"], r: 0},
+  {p: "Moisés abriu qual mar?", o: ["Morto", "Vermelho", "Cáspio"], r: 1},
+  {p: "Quem foi traído por Judas?", o: ["Jesus", "Pedro", "João"], r: 0},
+  {p: "Quem foi jogado na cova dos leões?", o: ["José", "Daniel", "Elias"], r: 1},
+  {p: "Quem ressuscitou Lázaro?", o: ["Paulo", "Jesus", "Moisés"], r: 1},
+  {p: "Qual salmo diz 'O Senhor é meu pastor'?", o: ["91", "23", "1"], r: 1},
+  {p: "Quem era o homem mais forte?", o: ["Sansão", "Golias", "Davi"], r: 0},
+  {p: "Onde Jesus nasceu?", o: ["Nazaré", "Belém", "Jerusalém"], r: 1},
+  {p: "Quem escreveu o Apocalipse?", o: ["Paulo", "Pedro", "João"], r: 2},
+  {p: "Quantos livros tem a Bíblia?", o: ["66", "70", "50"], r: 0},
+  {p: "Qual o nome da mãe de Jesus?", o: ["Marta", "Maria", "Isabel"], r: 1},
+  {p: "Quem foi o 1º rei de Israel?", o: ["Davi", "Saul", "Salomão"], r: 1}
+];
+
+let curPage = 'home', qIdx = 0, qPts = 0;
+
+function openPage(id) {
+  document.getElementById(curPage).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  document.getElementById('backBtn').style.display = 'block';
+  curPage = id;
+  if(id === 'oracao') atualizarOracao();
+  if(id === 'devocional') atualizarDevocional();
+  if(id === 'quiz') startQuiz();
+  if(id === 'frases') atualizarFrase();
+  if(id === 'citacoes') atualizarCitacoes();
+  if(id === 'palavra') carregarPalavra();
+  if(id === 'notas') document.getElementById('noteArea').value = localStorage.getItem('igreja_notas') || '';
+}
+
+function goHome() {
+  document.getElementById(curPage).classList.remove('active');
+  document.getElementById('home').classList.add('active');
+  document.getElementById('backBtn').style.display = 'none';
+  curPage = 'home';
+}
+
+function atualizarOracao() {
+  const shuffle = motivosOracao.sort(() => 0.5 - Math.random()).slice(0, 3);
+  document.getElementById('oracaoLista').innerHTML = shuffle.map(m => `<div class="card"><h3>🙏 Motivo:</h3><p>${m}</p></div>`).join('');
+}
+
+function atualizarDevocional() {
+  const d = devocionais[Math.floor(Math.random()*devocionais.length)];
+  document.getElementById('devocionalCard').innerHTML = `<h3>${d.ref}</h3><p style="font-size:18px; font-style:italic;">"${d.txt}"</p>`;
+}
+
+function atualizarFrase() {
+  const f = frases[Math.floor(Math.random()*frases.length)];
+  document.getElementById('fraseTexto').innerText = f;
+  document.getElementById('linkZap').href = `https://wa.me/?text=${encodeURIComponent(f + " - AD Pentecostes")}`;
+}
+
+function atualizarCitacoes() {
+  const shuffle = citacoes.sort(() => 0.5 - Math.random()).slice(0, 3);
+  document.getElementById('citacoesLista').innerHTML = shuffle.map(c => `<div class="card">📖 <strong>${c}</strong></div>`).join('');
+}
+
+function startQuiz() { qIdx = 0; qPts = 0; showQ(); }
+function showQ() {
+  const q = perguntas[qIdx];
+  document.getElementById('quizStatus').innerText = `PERGUNTA ${qIdx + 1} DE 15`;
+  document.getElementById('quizPergunta').innerText = q.p;
+  document.getElementById('quizFeedback').style.display = 'none';
+  document.getElementById('btnProxima').style.display = 'none';
+  const ops = document.getElementById('quizOpcoes');
+  ops.innerHTML = '';
+  q.o.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'btn'; b.style.background = 'white'; b.style.color = 'black'; b.style.border = '1px solid #ddd';
+    b.innerText = opt;
+    b.onclick = () => {
+      if(i === q.r) { qPts++; document.getElementById('quizFeedback').className = 'quiz-feedback certo'; document.getElementById('quizFeedback').innerText = "Correto!"; }
+      else { document.getElementById('quizFeedback').className = 'quiz-feedback erro'; document.getElementById('quizFeedback').innerText = "A certa era: " + q.o[q.r]; }
+      document.getElementById('quizFeedback').style.display = 'block';
+      document.getElementById('btnProxima').style.display = 'block';
+      Array.from(ops.children).forEach(btn => btn.disabled = true);
+    };
+    ops.appendChild(b);
+  });
+}
+function proximaPergunta() { qIdx++; if(qIdx < 15) showQ(); else alert("Fim! Pontos: " + qPts); }
+
+function carregarPalavra() {
+  const p = devocionais[Math.floor(Math.random()*devocionais.length)];
+  document.getElementById('palavraCard').innerHTML = `<h3>${p.ref}</h3><p>${p.txt}</p>`;
+}
+</script>
+</body>
+</html>
